@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.System.UserProfile;
+using Windows.UI;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Threading.Tasks;
 using Windows.Web.Http;
-using Windows.Storage;
-using Windows.Networking.BackgroundTransfer;
-using Windows.System.UserProfile;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.ViewManagement;
-using Windows.UI;
-using Windows.Storage.Streams;
 
 namespace DailyWallpaper
 {
@@ -48,11 +49,11 @@ namespace DailyWallpaper
                     StatusText.Text = "Contacting Bing...";
                     HttpResponseMessage response = await httpClient.GetAsync(domainuri);
                     responsetext = await response.Content.ReadAsStringAsync();
-
+                    
                     StatusText.Text = "Retrieving image description...";
                     int startindex = responsetext.IndexOf("\"copyright\"") + 13;
                     int endindex = responsetext.IndexOf("\"copyrightlink\"", startindex) - 2;
-                    DescriptionText.Text = responsetext.Substring(startindex, endindex - startindex);
+                    DescriptionText.Text = Regex.Unescape(responsetext.Substring(startindex, endindex - startindex));
 
                     StatusText.Text = "Retrieving image path...";
                     string subdomain = "/th?id=OHR.";
