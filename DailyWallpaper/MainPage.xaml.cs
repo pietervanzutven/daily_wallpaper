@@ -51,15 +51,15 @@ namespace DailyWallpaper
                     responsetext = await response.Content.ReadAsStringAsync();
                     
                     StatusText.Text = "Retrieving image description...";
-                    int startindex = responsetext.IndexOf("\"copyright\"") + 13;
-                    int endindex = responsetext.IndexOf("\"copyrightlink\"", startindex) - 2;
+                    int startindex = responsetext.IndexOf("\"Title\":") + 9;
+                    int endindex = responsetext.IndexOf(",", startindex);
                     DescriptionText.Text = Regex.Unescape(responsetext.Substring(startindex, endindex - startindex));
 
                     StatusText.Text = "Retrieving image path...";
                     string subdomain = "/th?id=OHR.";
-                    startindex = responsetext.IndexOf(subdomain) + 11;
-                    endindex = responsetext.IndexOf(".jpg", startindex) - 9;
-                    string figurename = responsetext.Substring(startindex, endindex - startindex);
+                    startindex = responsetext.IndexOf("\"Url\":") + 7;
+                    endindex = responsetext.IndexOf(".jpg", startindex) - 10;
+                    string figurename = responsetext.Substring(startindex, endindex - startindex).Replace(subdomain, "");
                     string extension = ".jpg";
 
                     StatusText.Text = "Retrieving image size...";
@@ -70,7 +70,7 @@ namespace DailyWallpaper
                         figuresize1 = "1920x1200";
                         figuresize2 = "1920x1080";
                     }
-                    Uri figureuri = new Uri(domain + subdomain + figurename + figuresize1 + extension);
+                    Uri figureuri = new Uri(domain + subdomain + figurename + "_" + figuresize1 + extension);
 
                     StatusText.Text = "Downloading image...";
                     StorageFile figurepath = await ApplicationData.Current.LocalFolder.CreateFileAsync(figurename + extension, CreationCollisionOption.OpenIfExists);
@@ -82,7 +82,7 @@ namespace DailyWallpaper
                     }
                     catch
                     {
-                        figureuri = new Uri(domain + subdomain + figurename + figuresize2 + extension);
+                        figureuri = new Uri(domain + subdomain + figurename + "_" + figuresize2 + extension);
                         download = downloader.CreateDownload(figureuri, figurepath);
                         await download.StartAsync();
                     }
