@@ -52,7 +52,7 @@ namespace DailyWallpaper
                     
                     StatusText.Text = "Retrieving image description...";
                     int startindex = responsetext.IndexOf("\"Title\":") + 9;
-                    int endindex = responsetext.IndexOf(",", startindex);
+                    int endindex = responsetext.IndexOf("\",", startindex);
                     DescriptionText.Text = Regex.Unescape(responsetext.Substring(startindex, endindex - startindex));
 
                     StatusText.Text = "Retrieving image path...";
