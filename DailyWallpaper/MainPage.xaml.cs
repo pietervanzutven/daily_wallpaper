@@ -108,7 +108,7 @@ namespace DailyWallpaper
                 catch
                 {
                     int counter = 60;
-                    while (counter > 0)
+                    while (counter > 0 && !success)
                     {
                         StatusText.Text = "Error retrieving wallpaper, retrying in " + counter + "s...";
                         await Task.Delay(1000);
