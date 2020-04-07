@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
+using Windows.Data.Json;
 
 namespace DailyWallpaper
 {
@@ -101,8 +102,9 @@ namespace DailyWallpaper
                     Color accentColor = new UISettings().GetColorValue(UIColorType.Accent);
 
                     StatusText.Text = "Publishing system accent color...";
-                    string json = "{\"color\":\"" + accentColor.R + "," + accentColor.G + "," + accentColor.B + "\"}";
-                    HttpStringContent content = new HttpStringContent(json, UnicodeEncoding.Utf8, "application/json");
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.SetNamedValue("color", JsonValue.CreateStringValue(accentColor.R + "," + accentColor.G + "," + accentColor.B));
+                    HttpStringContent content = new HttpStringContent(jsonObject.Stringify(), UnicodeEncoding.Utf8, "application/json");
                     await httpClient.PutAsync(new Uri("https://jsonstorage.net/api/items/59119bb7-7ed4-40de-a6b4-cca0c3b67e39"), content);
                 }
                 catch
