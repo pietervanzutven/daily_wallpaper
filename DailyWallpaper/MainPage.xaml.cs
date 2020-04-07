@@ -103,7 +103,7 @@ namespace DailyWallpaper
                     StatusText.Text = "Publishing system accent color...";
                     string json = "{\"color\":\"" + accentColor.R + "," + accentColor.G + "," + accentColor.B + "\"}";
                     HttpStringContent content = new HttpStringContent(json, UnicodeEncoding.Utf8, "application/json");
-                    await httpClient.PutAsync(new Uri("https://api.myjson.com/bins/15n2pq"), content);
+                    await httpClient.PutAsync(new Uri("https://jsonstorage.net/api/items/59119bb7-7ed4-40de-a6b4-cca0c3b67e39"), content);
                 }
                 catch
                 {
