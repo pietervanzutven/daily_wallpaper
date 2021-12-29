@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="DailyWallpaper" Publisher="CN=Pieter van Zutven" Version="2.0.19.0" />
+  <Identity Name="DailyWallpaper" Publisher="CN=Pieter van Zutven" Version="2.0.20.0" />
   <mp:PhoneIdentity PhoneProductId="3606003b-7698-4134-a78c-7b6812452f3f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>DailyWallpaper</DisplayName>
