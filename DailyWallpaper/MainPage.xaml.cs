@@ -105,7 +105,7 @@ namespace DailyWallpaper
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.SetNamedValue("color", JsonValue.CreateStringValue(accentColor.R + "," + accentColor.G + "," + accentColor.B));
                     HttpStringContent content = new HttpStringContent(jsonObject.Stringify(), UnicodeEncoding.Utf8, "application/json");
-                    await httpClient.PutAsync(new Uri("https://api.jsonstorage.net/v1/json/076d7eeb-61fe-4a6e-b0cb-23094644edda"), content);
+                    await httpClient.PutAsync(new Uri("https://jsonbase.com/dailywallpaper/color"), content);
                 }
                 catch
                 {
