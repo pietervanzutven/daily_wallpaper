@@ -37,8 +37,10 @@ namespace DailyWallpaper
         {
             StatusText.Text = "Initializing...";
             StorageFile startupFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("startup.dwp", CreationCollisionOption.OpenIfExists);
-            string domain = "http://www.bing.com";
-            Uri domainuri = new Uri(domain);
+            string domain = "https://www.bing.com";
+            string subdomain = "/th?id=OHR.";
+            string api = "/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=nl";
+            Uri domainuri = new Uri(domain + api);
             HttpClient httpClient = new HttpClient();
             string responsetext = "";
 
@@ -52,14 +54,13 @@ namespace DailyWallpaper
                     responsetext = await response.Content.ReadAsStringAsync();
                     
                     StatusText.Text = "Retrieving image description...";
-                    int startindex = responsetext.IndexOf("\"Title\":") + 9;
-                    int endindex = responsetext.IndexOf("\",", startindex);
+                    int startindex = responsetext.IndexOf("<copyright>") + 11;
+                    int endindex = responsetext.IndexOf("</copyright>");
                     DescriptionText.Text = Regex.Unescape(responsetext.Substring(startindex, endindex - startindex));
 
                     StatusText.Text = "Retrieving image path...";
-                    string subdomain = "/th?id=OHR.";
-                    startindex = responsetext.IndexOf("\"Url\":") + 7;
-                    endindex = responsetext.IndexOf(".jpg", startindex) - 10;
+                    startindex = responsetext.IndexOf("<url>") + 5;
+                    endindex = responsetext.IndexOf(".jpg") - 10;
                     string figurename = responsetext.Substring(startindex, endindex - startindex).Replace(subdomain, "");
                     string extension = ".jpg";
 
